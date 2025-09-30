@@ -1,0 +1,15 @@
+services:
+  my-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.buildozer
+    volumes:
+      - ./src:/app
+      - buildozer_cache:/home/user/.buildozer
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY}
+    command: buildozer android debug
+
+volumes:
+  buildozer_cache:
