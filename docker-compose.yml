@@ -2,14 +2,19 @@ services:
   my-app:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.buildozer
+      dockerfile: ./docker/Dockerfile.alt
     volumes:
-      - ./src:/app
+      - ./src:/home/builder/source
+      - ./media:/media
       - buildozer_cache:/home/user/.buildozer
       - /tmp/.X11-unix:/tmp/.X11-unix
+    env_file:
+      - .env
     environment:
       - DISPLAY=${DISPLAY}
-    command: buildozer android debug
+    command: /bin/sh -lc "cd source; buildozer android debug"
+
+
 
 volumes:
   buildozer_cache:
